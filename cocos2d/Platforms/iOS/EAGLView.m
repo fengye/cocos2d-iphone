@@ -128,7 +128,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		pixelformat_		= format;
 		depthFormat_		= depth;
 		preserveBackbuffer_	= retained;
-		size_				= frame.size;
+        
+        // need to have invalid size_ to trigger resizeFromLayer.
+		//size_				= frame.size;
 		
 		if( ! [self setupSurface] ) {
 			[self release];
@@ -143,11 +145,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
 	if( (self = [super initWithCoder:aDecoder]) ) {
 		
-		CAEAGLLayer *eaglLayer = (CAEAGLLayer*)[self layer];
+		//CAEAGLLayer *eaglLayer = (CAEAGLLayer*)[self layer];
 		
 		pixelformat_ = kEAGLColorFormatRGB565;
 		depthFormat_ = 0; // GL_DEPTH_COMPONENT24_OES;
-		size_ = [eaglLayer bounds].size;
+		
+		// need to have invalid size_ to trigger resizeFromLayer.
+		//size_ = [eaglLayer bounds].size;
 
 		if( ! [self setupSurface] ) {
 			[self release];
@@ -191,9 +195,21 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) layoutSubviews
 {
-    [renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
-	size_ = [renderer_ backingSize];
+	CGRect bounds = [self bounds];
+	
+	// Issue #925, locally fixed by Ye Feng.
+	// Basically the crash occurs when UIKit objects are subviews of EAGLView. When objects like UITable
+	// is running, it likely cause layoutSubviews to be called multiple times in a short time range. The
+	// frequency of alloc/release surface might cause the crash. In 0.99.1 there's an if statement which 
+	// protect the resize operation called multiple times, if the window frame doesn't change. So I added
+	// it back now.
+	if ((roundf(bounds.size.width) != size_.width) || (roundf(bounds.size.height) != size_.height)) 
+	{
+		[renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
+	}
 
+	size_ = [renderer_ backingSize];
+	
 	// Issue #914 #924
 	CCDirector *director = [CCDirector sharedDirector];
 	[director reshapeProjection:size_];
