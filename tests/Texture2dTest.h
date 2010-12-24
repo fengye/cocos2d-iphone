@@ -18,6 +18,8 @@
 @property (assign) IBOutlet NSWindow	*window;
 @property (assign) IBOutlet MacGLView	*glView;
 
+- (IBAction)toggleFullScreen:(id)sender;
+
 @end
 #endif // Mac
 
@@ -77,6 +79,14 @@
 @end
 
 @interface TexturePVRRGBA4444 : TextureDemo
+{}
+@end
+
+@interface TexturePVRRGBA4444GZ : TextureDemo
+{}
+@end
+
+@interface TexturePVRRGBA4444CCZ : TextureDemo
 {}
 @end
 

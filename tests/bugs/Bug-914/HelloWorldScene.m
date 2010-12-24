@@ -34,13 +34,15 @@
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init] )) {
 
+		
+		self.isTouchEnabled = YES;
 		// ask director the the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
 
-		CCColorLayer *layer;
+		CCLayerColor *layer;
 		
 		for( int i=0;i < 5;i++) {
-			layer = [CCColorLayer layerWithColor:ccc4(i*20, i*20, i*20,255)];
+			layer = [CCLayerColor layerWithColor:ccc4(i*20, i*20, i*20,255)];
 			[layer setContentSize:CGSizeMake(i*100, i*100)];
 			[layer setPosition:ccp(size.width/2, size.height/2)];
 			[layer setAnchorPoint:ccp(0.5f, 0.5f)];
@@ -67,6 +69,16 @@
 		[self addChild: label];
 	}
 	return self;
+}
+
+- (void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	NSLog(@"Number of touches: %d", [touches count]);
+}
+
+- (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	[self ccTouchesMoved:touches withEvent:event];
 }
 
 -(void) restart:(id)sender

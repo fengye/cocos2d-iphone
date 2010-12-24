@@ -141,43 +141,43 @@
 
 static int sceneIdx=0;
 static NSString *transitions[] = {
-						@"CCTransitionJumpZoom",
-						@"CCTransitionCrossFade",
-						@"CCTransitionRadialCCW",
-						@"CCTransitionRadialCW",
-						@"TransitionPageForward",
-						@"TransitionPageBackward",
-						@"CCTransitionFadeTR",
-						@"CCTransitionFadeBL",
-						@"CCTransitionFadeUp",
-						@"CCTransitionFadeDown",
-						@"CCTransitionTurnOffTiles",
-						@"CCTransitionSplitRows",
-						@"CCTransitionSplitCols",
-						@"CCTransitionFade",
-						@"FadeWhiteTransition",
-						@"FlipXLeftOver",
-						@"FlipXRightOver",
-						@"FlipYUpOver",
-						@"FlipYDownOver",
-						@"FlipAngularLeftOver",
-						@"FlipAngularRightOver",
-						@"ZoomFlipXLeftOver",
-						@"ZoomFlipXRightOver",
-						@"ZoomFlipYUpOver",
-						@"ZoomFlipYDownOver",
-						@"ZoomFlipAngularLeftOver",
-						@"ZoomFlipAngularRightOver",
-						@"CCTransitionShrinkGrow",
-						@"CCTransitionRotoZoom",
-						@"CCTransitionMoveInL",
-						@"CCTransitionMoveInR",
-						@"CCTransitionMoveInT",
-						@"CCTransitionMoveInB",
-						@"CCTransitionSlideInL",
-						@"CCTransitionSlideInR",
-						@"CCTransitionSlideInT",
-						@"CCTransitionSlideInB",
+	@"CCTransitionJumpZoom",
+	@"CCTransitionCrossFade",
+	@"CCTransitionRadialCCW",
+	@"CCTransitionRadialCW",
+	@"TransitionPageForward",
+	@"TransitionPageBackward",
+	@"CCTransitionFadeTR",
+	@"CCTransitionFadeBL",
+	@"CCTransitionFadeUp",
+	@"CCTransitionFadeDown",
+	@"CCTransitionTurnOffTiles",
+	@"CCTransitionSplitRows",
+	@"CCTransitionSplitCols",
+	@"CCTransitionFade",
+	@"FadeWhiteTransition",
+	@"FlipXLeftOver",
+	@"FlipXRightOver",
+	@"FlipYUpOver",
+	@"FlipYDownOver",
+	@"FlipAngularLeftOver",
+	@"FlipAngularRightOver",
+	@"ZoomFlipXLeftOver",
+	@"ZoomFlipXRightOver",
+	@"ZoomFlipYUpOver",
+	@"ZoomFlipYDownOver",
+	@"ZoomFlipAngularLeftOver",
+	@"ZoomFlipAngularRightOver",
+	@"CCTransitionShrinkGrow",
+	@"CCTransitionRotoZoom",
+	@"CCTransitionMoveInL",
+	@"CCTransitionMoveInR",
+	@"CCTransitionMoveInT",
+	@"CCTransitionMoveInB",
+	@"CCTransitionSlideInL",
+	@"CCTransitionSlideInR",
+	@"CCTransitionSlideInT",
+	@"CCTransitionSlideInB",
 };
 
 Class nextTransition()
@@ -470,12 +470,16 @@ Class restartTransition()
 	// On the other hand "Flip" transitions doesn't work with DepthBuffer > 0
 	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
 								   pixelFormat:kEAGLColorFormatRGBA8
-								   depthFormat:0 //GL_DEPTH_COMPONENT24_OES
-							preserveBackbuffer:NO];
+								   depthFormat:0 // GL_DEPTH_COMPONENT24_OES
+						];
 	[glView setMultipleTouchEnabled:YES];
 	
 	// connect it to the director
 	[director setOpenGLView:glView];
+	
+	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
+	if( ! [director enableRetinaDisplay:YES] )
+		CCLOG(@"Retina Display Not supported");
 	
 	// glview is a child of the main window
 	[window addSubview:glView];
@@ -553,25 +557,38 @@ Class restartTransition()
 
 @synthesize window=window_, glView=glView_;
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	
-	
-	CCDirector *director = [CCDirector sharedDirector];
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	
 	[director setDisplayFPS:YES];
 	
 	[director setOpenGLView:glView_];
 	
-	//	[director setProjection:kCCDirectorProjection2D];
+//	[director setProjection:kCCDirectorProjection2D];
 	
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
 	
+	// EXPERIMENTAL stuff.
+	// 'Effects' don't work correctly when autoscale is turned on.
+	[director setResizeMode:kCCDirectorResize_AutoScale];	
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [TextLayer node]];
 	
 	[director runWithScene:scene];
+}
+
+- (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication
+{
+	return YES;
+}
+
+- (IBAction)toggleFullScreen: (id)sender
+{
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+	[director setFullScreen: ! [director isFullScreen] ];
 }
 
 @end

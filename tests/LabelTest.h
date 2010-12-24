@@ -18,6 +18,8 @@
 @property (assign) IBOutlet NSWindow	*window;
 @property (assign) IBOutlet MacGLView	*glView;
 
+- (IBAction)toggleFullScreen:(id)sender;
+
 @end
 #endif // Mac
 
@@ -83,6 +85,21 @@
 @interface LabelsEmpty : AtlasDemo
 {
 	BOOL setEmpty;
+}
+@end
+
+@interface LabelBMFontHD : AtlasDemo
+{
+}
+@end
+
+@interface LabelAtlasHD : AtlasDemo
+{
+}
+@end
+
+@interface LabelGlyphDesigner : AtlasDemo
+{
 }
 @end
 

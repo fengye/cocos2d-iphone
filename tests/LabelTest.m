@@ -21,6 +21,9 @@ static NSString *transitions[] = {
 	@"AtlasFastBitmap",
 	@"BitmapFontMultiLine",
 	@"LabelsEmpty",
+	@"LabelBMFontHD",
+	@"LabelAtlasHD",
+	@"LabelGlyphDesigner",
 	
 	// Not a label test. Should be moved to Atlas test
 	@"Atlas1",
@@ -338,7 +341,7 @@ Class restartAction()
 #pragma mark Example Atlas3
 
 /*
- * Use any of these editors to generate bitmap font atlas:
+ * Use any of these editors to generate BMFont labels:
  *   http://www.n4te.com/hiero/hiero.jnlp
  *   http://slick.cokeandcode.com/demos/hiero.jnlp
  *   http://www.angelcode.com/products/bmfont/
@@ -348,7 +351,7 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-		CCColorLayer *col = [CCColorLayer layerWithColor:ccc4(128,128,128,255)];
+		CCLayerColor *col = [CCLayerColor layerWithColor:ccc4(128,128,128,255)];
 		[self addChild:col z:-10];
 		
 		CCLabelBMFont *label1 = [CCLabelBMFont labelWithString:@"Test" fntFile:@"bitmapFontTest2.fnt"];
@@ -421,7 +424,7 @@ Class restartAction()
 #pragma mark Example Atlas4
 
 /*
- * Use any of these editors to generate bitmap font atlas:
+ * Use any of these editors to generate BMFont labels:
  *   http://www.n4te.com/hiero/hiero.jnlp
  *   http://slick.cokeandcode.com/demos/hiero.jnlp
  *   http://www.angelcode.com/products/bmfont/
@@ -433,7 +436,7 @@ Class restartAction()
 	if( (self=[super init]) ) {
 		
 		// Upper Label
-		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"Bitmap Font Atlas" fntFile:@"bitmapFontTest.fnt"];
+		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"BMFont label" fntFile:@"bitmapFontTest.fnt"];
 		[self addChild:label];
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
@@ -515,7 +518,7 @@ Class restartAction()
 #pragma mark Example Atlas5
 
 /*
- * Use any of these editors to generate bitmap font atlas:
+ * Use any of these editors to generate BMFont labels:
  *   http://www.n4te.com/hiero/hiero.jnlp
  *   http://slick.cokeandcode.com/demos/hiero.jnlp
  *   http://www.angelcode.com/products/bmfont/
@@ -554,7 +557,7 @@ Class restartAction()
 #pragma mark Example Atlas6
 
 /*
- * Use any of these editors to generate bitmap font atlas:
+ * Use any of these editors to generate BMFont label:
  *   http://www.n4te.com/hiero/hiero.jnlp
  *   http://slick.cokeandcode.com/demos/hiero.jnlp
  *   http://www.angelcode.com/products/bmfont/
@@ -604,7 +607,7 @@ Class restartAction()
 #pragma mark Example AtlasBitmapColor
 
 /*
- * Use any of these editors to generate bitmap font atlas:
+ * Use any of these editors to generate BMFont label:
  *   http://www.n4te.com/hiero/hiero.jnlp
  *   http://slick.cokeandcode.com/demos/hiero.jnlp
  *   http://www.angelcode.com/products/bmfont/
@@ -658,7 +661,7 @@ Class restartAction()
 #pragma mark Example AtlasFastBitmap
 
 /*
- * Use any of these editors to generate bitmap font atlas:
+ * Use any of these editors to generate BMFont label:
  *   http://www.n4te.com/hiero/hiero.jnlp
  *   http://slick.cokeandcode.com/demos/hiero.jnlp
  *   http://www.angelcode.com/products/bmfont/
@@ -701,7 +704,7 @@ Class restartAction()
 #pragma mark BitmapFontMultiLine
 
 /*
- * Use any of these editors to generate bitmap font atlas:
+ * Use any of these editors to generate BMFont label:
  *   http://www.n4te.com/hiero/hiero.jnlp
  *   http://slick.cokeandcode.com/demos/hiero.jnlp
  *   http://www.angelcode.com/products/bmfont/
@@ -806,17 +809,17 @@ Class restartAction()
 	id<CCLabelProtocol> label3 = (id<CCLabelProtocol>) [self getChildByTag:kTagBitmapAtlas3];
 	
 	if( ! setEmpty ) {
-		label1.string = @"not empty";
-		label2.string = @"not empty";
-		label3.string = @"hi";
+		[label1 setString: @"not empty"];
+		[label2 setString: @"not empty"];
+		[label3 setString: @"hi"];
 		
 		setEmpty = YES;
 
 	} else {
 		
-		label1.string = @"";
-		label2.string = @"";
-		label3.string = @"";
+		[label1 setString:@""];
+		[label2 setString:@""];
+		[label3 setString:@""];
 		
 		setEmpty = NO;
 	}
@@ -834,6 +837,108 @@ Class restartAction()
 }
 
 @end
+
+#pragma mark -
+#pragma mark LabelBMFontHD
+
+@implementation LabelBMFontHD
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		// CCLabelBMFont
+		CCLabelBMFont *label1 = [CCLabelBMFont labelWithString:@"TESTING RETINA DISPLAY" fntFile:@"konqa32.fnt"];
+		[self addChild:label1];
+		[label1 setPosition: ccp(s.width/2, s.height/2)];
+		
+	}
+	
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"Testing Retina Display BMFont";
+}
+
+-(NSString *) subtitle
+{
+	return @"loading arista16 or arista16-hd";
+}
+
+@end
+
+#pragma mark -
+#pragma mark LabelAtlasHD
+
+@implementation LabelAtlasHD
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		// CCLabelBMFont
+		CCLabelAtlas *label1 = [CCLabelAtlas labelWithString:@"TESTING RETINA DISPLAY" charMapFile:@"larabie-16.png" itemWidth:10 itemHeight:20 startCharMap:'A'];
+		label1.anchorPoint = ccp(0.5f, 0.5f);
+		
+		[self addChild:label1];
+		[label1 setPosition: ccp(s.width/2, s.height/2)];
+		
+	}
+	
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"LabelAtlas with Retina Display";
+}
+
+-(NSString *) subtitle
+{
+	return @"loading larabie-16 / larabie-16-hd";
+}
+
+@end
+
+#pragma mark -
+#pragma mark LabelGlyphDesigner
+
+@implementation LabelGlyphDesigner
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		CCLayerColor *layer = [CCLayerColor layerWithColor:ccc4(128,128,128,255)];
+		[self addChild:layer z:-10];
+		
+		// CCLabelBMFont
+		CCLabelBMFont *label1 = [CCLabelBMFont labelWithString:@"Testing Glyph Designer" fntFile:@"futura-48.fnt"];
+		[self addChild:label1];
+		[label1 setPosition: ccp(s.width/2, s.height/2)];
+		
+	}
+	
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"Testing Glyph Designer";
+}
+
+-(NSString *) subtitle
+{
+	return @"You should see a font with shawdows and outline";
+}
+
+@end
+
 
 #pragma mark -
 #pragma mark Application Delegate - iPhone
@@ -865,6 +970,10 @@ Class restartAction()
 	
 	// Sets landscape mode
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+	
+	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
+	if( ! [director enableRetinaDisplay:YES] )
+		CCLOG(@"Retina Display Not supported");
 	
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
@@ -933,10 +1042,9 @@ Class restartAction()
 
 @synthesize window=window_, glView=glView_;
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	
-	
-	CCDirector *director = [CCDirector sharedDirector];
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	
 	[director setDisplayFPS:YES];
 	
@@ -947,11 +1055,25 @@ Class restartAction()
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
 	
+	// EXPERIMENTAL stuff.
+	// 'Effects' don't work correctly when autoscale is turned on.
+	[director setResizeMode:kCCDirectorResize_AutoScale];	
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 	
 	[director runWithScene:scene];
+}
+
+- (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication
+{
+	return YES;
+}
+
+- (IBAction)toggleFullScreen: (id)sender
+{
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+	[director setFullScreen: ! [director isFullScreen] ];
 }
 
 @end
