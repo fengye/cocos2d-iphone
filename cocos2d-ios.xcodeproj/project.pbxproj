@@ -1535,6 +1535,7 @@
 		50FD7B450FFAA8C6004073B5 /* atlastest.png in Resources */ = {isa = PBXBuildFile; fileRef = 506882680E957C4A00F943E5 /* atlastest.png */; };
 		6F305B5F0FB9D2790052E700 /* TransformUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F305B5D0FB9D2790052E700 /* TransformUtils.h */; };
 		6F305B600FB9D2790052E700 /* TransformUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F305B5E0FB9D2790052E700 /* TransformUtils.m */; };
+		72929B9412C508B4003BC1E5 /* libFontLabel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 505461DF10616AE100AB7C52 /* libFontLabel.a */; };
 		8E3FC8920F7B8BE900B3E5DE /* trance-loop.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 8E3FC8910F7B8BE900B3E5DE /* trance-loop.ogg */; };
 		8E3FC8950F7B8C0600B3E5DE /* ATTRIBUTION in Resources */ = {isa = PBXBuildFile; fileRef = 8E3FC8940F7B8C0600B3E5DE /* ATTRIBUTION */; };
 		8E60F0DB0F766499005FCEAC /* waterfall.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8E60F0DA0F766499005FCEAC /* waterfall.caf */; };
@@ -4451,6 +4452,7 @@
 				5018F2E50DFDEBBA00C013A5 /* OpenGLES.framework in Frameworks */,
 				5018F2E60DFDEBBA00C013A5 /* QuartzCore.framework in Frameworks */,
 				503092B310447296005F7AFC /* libz.dylib in Frameworks */,
+				72929B9412C508B4003BC1E5 /* libFontLabel.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
